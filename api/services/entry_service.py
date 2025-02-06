@@ -2,14 +2,14 @@ from datetime import datetime, timezone
 from typing import List, Dict, Any
 import logging
 
-from api.repositories.cosmos_repository import CosmosDB
+from api.repositories.postgres_repository import PostgresDB
 
 logger = logging.getLogger("journal")
 
 class EntryService:
-    def __init__(self, db: CosmosDB):
+    def __init__(self, db: PostgresDB):
         self.db = db
-        logger.debug("EntryService initialized with CosmosDB client.")
+        logger.debug("EntryService initialized with PostgresDB client.")
 
     async def create_entry(self, entry_data: Dict[str, Any]) -> Dict[str, Any]:
         """Creates a new entry."""

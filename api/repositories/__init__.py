@@ -1,4 +1,4 @@
 from .interface_respository import DatabaseInterface
-from .cosmos_repository import CosmosDB
+from .postgres_repository import PostgresDB
 
-__all__ = ['DatabaseInterface', 'CosmosDB']
+__all__ = ['DatabaseInterface', 'PostgresDB']
