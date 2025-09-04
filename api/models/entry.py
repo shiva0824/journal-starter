@@ -3,6 +3,24 @@ from typing import Optional
 from datetime import datetime
 from uuid import uuid4
 
+class EntryCreate(BaseModel):
+    """Model for creating a new journal entry (user input)."""
+    work: str = Field(
+        max_length=256,
+        description="What did you work on today?",
+        json_schema_extra={"example": "Studied FastAPI and built my first API endpoints"}
+    )
+    struggle: str = Field(
+        max_length=256,
+        description="What's one thing you struggled with today?",
+        json_schema_extra={"example": "Understanding async/await syntax and when to use it"}
+    )
+    intention: str = Field(
+        max_length=256,
+        description="What will you study/work on tomorrow?",
+        json_schema_extra={"example": "Practice PostgreSQL queries and database design"}
+    )
+
 class Entry(BaseModel):
     # TODO: Add field validation rules
     # TODO: Add custom validators
@@ -36,11 +54,9 @@ class Entry(BaseModel):
         default_factory=datetime.utcnow,
         description="Timestamp when the entry was last updated."
     )
-    # Optional: add a partition key if your Cosmos DB collection requires it
-    # partition_key: str = Field(..., description="Partition key for the entry.")
 
-    class Config:
-        # This can help with how the model serializes field names if needed by Cosmos DB.
-        # For example, if Cosmos DB requires a specific field naming convention.
-        # allow_population_by_field_name = True
-        pass
+    model_config = {
+        "json_encoders": {
+            datetime: lambda v: v.isoformat()
+        }
+    }
