@@ -72,6 +72,32 @@ If you break the file, you can always re-copy from `.env-sample`.
    ```
 
    You should see the postgres service running.
+=======
+### 4. Configure Your Environment (.env)
+
+Environment variables live in a `.env` file (which is **git-ignored** so you don't accidentally commit secrets). This repo ships with a template named `.env-sample`.
+
+1. Copy the sample file to create your real `.env`:
+
+   ```bash
+   cp .env-sample .env
+   ```
+
+2. Open `.env` and review the contents. It should look like this:
+
+   ```env
+   DATABASE_URL=postgresql://postgres:postgres@localhost:5432/career_journal
+   ```
+
+3. This value points to the PostgreSQL container you started in the previous step. If you ever change the database name, user, or password in `docker-compose.yml`, update the URL here to match.
+
+Why a sample file? 
+- Keeps secrets out of Git history
+- Lets teammates (or future you) know which variables are required
+- Makes onboarding predictable
+
+If you break the file, you can always re-copy from `.env-sample`.
+
 
 ### 5. Run the API
 
