@@ -28,29 +28,51 @@ By the end of this capstone, your API should be working locally and ready for cl
    code .
    ```
 
-### 2. Set Up Your Development Environment
+### 2. Configure Your Environment (.env)
+
+Environment variables live in a `.env` file (which is **git-ignored** so you don't accidentally commit secrets). This repo ships with a template named `.env-sample`.
+
+1. Copy the sample file to create your real `.env`:
+
+   ```bash
+   cp .env-sample .env
+   ```
+
+2. Open `.env` and review the contents. It should look like this:
+
+   ```env
+   POSTGRES_USER=postgres
+   POSTGRES_PASSWORD=postgres
+   POSTGRES_DB=career_journal
+   
+   DATABASE_URL=postgresql://postgres:postgres@localhost:5432/career_journal
+   ```
+
+3. The DATABASE_URL value points to the PostgreSQL container you started in the previous step. Your database credentials are also stored via environment variables.
+
+Why a sample file? 
+- Keeps secrets out of Git history
+- Lets teammates (or future you) know which variables are required
+- Makes onboarding predictable
+
+If you break the file, you can always re-copy from `.env-sample`.
+
+### 3. Set Up Your Development Environment
 
 1. **Install the Dev Containers extension** in VS Code (if not already installed)
 2. **Reopen in container**: When VS Code detects the `.devcontainer` folder, click "Reopen in Container"
    - Or use Command Palette (`Cmd/Ctrl + Shift + P`): `Dev Containers: Reopen in Container`
-3. **Wait for setup**: The container will automatically install Python, dependencies, and configure your environment
+3. **Wait for setup**: The API container will automatically install Python, dependencies, and configure your environment.
+   The PostgreSQL Database container will also automatically be created.
 
-### 3. Start PostgreSQL Database
-
-1. **Start the database** (run this in the VS Code terminal inside the dev container):
-
-   ```bash
-   docker-compose up -d postgres
-   ```
-
-2. **Verify it's running**:
+### 4. Verify the PostgreSQL Database Is Running
 
    ```bash
    docker-compose ps
    ```
 
    You should see the postgres service running.
-
+=======
 ### 4. Configure Your Environment (.env)
 
 Environment variables live in a `.env` file (which is **git-ignored** so you don't accidentally commit secrets). This repo ships with a template named `.env-sample`.
@@ -75,6 +97,7 @@ Why a sample file?
 - Makes onboarding predictable
 
 If you break the file, you can always re-copy from `.env-sample`.
+
 
 ### 5. Run the API
 
@@ -127,27 +150,24 @@ Want to see your data directly in the database? You can connect to PostgreSQL us
 1. **Open the PostgreSQL extension** (click the PostgreSQL icon in the sidebar)
 2. **Click "Add Connection"** or the "+" button
 3. **Enter these connection details**:
-   - **Server name**: `localhost`
-   - **Authentication Type**: `Password`
+   - **Host name**: `postgres`
    - **User name**: `postgres`
    - **Password**: `postgres`
-   - **Database name**: `career_journal`
-   - **Connection Name**: `Journal Starter DB` (or any name you prefer)
-   - **Save Password**: ✅ Check this for convenience
-
-4. **Click "Test Connection"** to verify it works
-5. **Click "Save & Connect"**
+   - **Port**: `5432`
+   - **Conection Type**: `Standard/No SSL`
+   - **Database**: `career_journal`
+   - **Display name**: `Journal Starter DB` (or any name you prefer)
 
 ### 3. Explore Your Data
 1. **Expand your connection** in the PostgreSQL panel
-2. **Right-click on "Journal Starter DB"** → **Expand**
-3. **Right-click on "career_journal"** database
+2. **Left-click on "Journal Starter DB" to expand**
+3. **Right-click on "career_journal"**
 4. **Select "New Query"**
 5. **Type this query** to see all your entries:
    ```sql
    SELECT * FROM entries;
    ```
-6. **Run the query** (Ctrl/Cmd + Enter) to see all your journal data!
+6. **Run the query** to see all your journal data! (Ctrl/Cmd + Enter OR use the PostgreSQL command pallete: Run Query)
 
 You can now explore the database structure, see exactly how your data is stored, and run custom queries to understand PostgreSQL better.
 
