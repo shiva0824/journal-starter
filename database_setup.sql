@@ -1,12 +1,11 @@
 -- Journal API Database Setup
--- Run this SQL in your PostgreSQL database to set up the required table
+-- This file is automatically ran upon the creation of the PostgresSQL container.
+-- You will notice the following volume mount in the docker-compose.yml file:
+--      
+--      volumes:
+--        - ../database_setup.sql:/docker-entrypoint-initdb.d/database_setup.sql
 
--- Create the database (run this as a PostgreSQL superuser)
--- CREATE DATABASE career_journal;
-
--- Connect to the career_journal database and run the following:
-
--- Create the entries table
+-- Creates the entries table
 CREATE TABLE IF NOT EXISTS entries (
     id VARCHAR PRIMARY KEY,
     data JSONB NOT NULL,
@@ -14,10 +13,10 @@ CREATE TABLE IF NOT EXISTS entries (
     updated_at TIMESTAMP WITH TIME ZONE NOT NULL
 );
 
--- Create an index on created_at for faster queries
+-- Creates an index on created_at for faster queries
 CREATE INDEX IF NOT EXISTS idx_entries_created_at ON entries(created_at);
 
--- Optional: Create an index on the JSON data for faster searches
+-- Creates an index on the JSON data for faster searches
 CREATE INDEX IF NOT EXISTS idx_entries_data_gin ON entries USING GIN (data);
 
 -- Verify the table was created

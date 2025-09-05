@@ -1,7 +1,6 @@
 import logging
 from typing import AsyncGenerator
 from fastapi import APIRouter, HTTPException, Request, Depends
-from fastapi.encoders import jsonable_encoder
 from repositories.postgres_repository import PostgresDB
 from services.entry_service import EntryService
 from models.entry import Entry, EntryCreate
@@ -44,7 +43,8 @@ async def create_entry(entry_data: EntryCreate, entry_service: EntryService = De
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Error creating entry: {str(e)}")
 
-
+# TODO: Implement GET /entries endpoint to list all journal entries
+# Example response: [{"id": "123", "work": "...", "struggle": "...", "intention": "..."}]
 @router.get("/entries")
 async def get_all_entries(entry_service: EntryService = Depends(get_entry_service)):
     """Get all journal entries."""
@@ -54,19 +54,19 @@ async def get_all_entries(entry_service: EntryService = Depends(get_entry_servic
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error retrieving entries: {str(e)}")
 
-
-#Define response model as Entry to utilize "model_config" for datetime formatting.
-@router.get("/entries/{entry_id}", response_model=Entry)
+@router.get("/entries/{entry_id}")
 async def get_entry(request: Request, entry_id: str, entry_service: EntryService = Depends(get_entry_service)):
-    async with PostgresDB() as db:
-        entry_service = EntryService(db)
-        result = await entry_service.get_entry(entry_id)
-    if not result:
-
-        raise HTTPException(status_code=404, detail="Entry not found")
-
-    return result
-   
+    """
+    TODO: Implement this endpoint to return a single journal entry by ID
+    
+    Steps to implement:
+    1. Use the entry_service to get the entry by ID
+    2. Return 404 if entry not found
+    3. Return the entry as JSON if found
+    
+    Hint: Check the update_entry endpoint for similar patterns
+    """
+    raise HTTPException(status_code=501, detail="Not implemented - complete this endpoint!")
 
 @router.patch("/entries/{entry_id}")
 async def update_entry(request: Request, entry_id: str, entry_update: dict):
@@ -79,19 +79,22 @@ async def update_entry(request: Request, entry_id: str, entry_update: dict):
   
     return result
 
-
+# TODO: Implement DELETE /entries/{entry_id} endpoint to remove a specific entry
+# Return 404 if entry not found
 @router.delete("/entries/{entry_id}")
 async def delete_entry(request: Request, entry_id: str, entry_service: EntryService = Depends(get_entry_service)):
+    """
+    TODO: Implement this endpoint to delete a specific journal entry
     
-    async with PostgresDB() as db:
-        entry_service = EntryService(db)
-        result = await entry_service.delete_entry(entry_id)
-    if not result:
-        
-        raise HTTPException(status_code=404, detail="Entry not found")
+    Steps to implement:
+    1. Check if the entry exists first
+    2. Delete the entry using entry_service
+    3. Return appropriate response
+    4. Return 404 if entry not found
     
-    return {"detail": "Entry deleted"}
-
+    Hint: Look at how the update_entry endpoint checks for existence
+    """
+    raise HTTPException(status_code=501, detail="Not implemented - complete this endpoint!")
 
 @router.delete("/entries")
 async def delete_all_entries(request: Request):
