@@ -28,23 +28,7 @@ By the end of this capstone, your API should be working locally and ready for cl
    code .
    ```
 
-### 2. Set Up Your Development Environment
-
-1. **Install the Dev Containers extension** in VS Code (if not already installed)
-2. **Reopen in container**: When VS Code detects the `.devcontainer` folder, click "Reopen in Container"
-   - Or use Command Palette (`Cmd/Ctrl + Shift + P`): `Dev Containers: Reopen in Container`
-3. **Wait for setup**: The API container will automatically install Python, dependencies, and configure your environment.
-   The PostgreSQL Database container will also automatically be created.
-
-### 3. Verify the PostgreSQL Database Is Running
-
-   ```bash
-   docker-compose ps
-   ```
-
-   You should see the postgres service running.
-
-### 4. Configure Your Environment (.env)
+### 2. Configure Your Environment (.env)
 
 Environment variables live in a `.env` file (which is **git-ignored** so you don't accidentally commit secrets). This repo ships with a template named `.env-sample`.
 
@@ -72,6 +56,22 @@ Why a sample file?
 - Makes onboarding predictable
 
 If you break the file, you can always re-copy from `.env-sample`.
+
+### 3. Set Up Your Development Environment
+
+1. **Install the Dev Containers extension** in VS Code (if not already installed)
+2. **Reopen in container**: When VS Code detects the `.devcontainer` folder, click "Reopen in Container"
+   - Or use Command Palette (`Cmd/Ctrl + Shift + P`): `Dev Containers: Reopen in Container`
+3. **Wait for setup**: The API container will automatically install Python, dependencies, and configure your environment.
+   The PostgreSQL Database container will also automatically be created.
+
+### 4. Verify the PostgreSQL Database Is Running
+
+   ```bash
+   docker-compose ps
+   ```
+
+   You should see the postgres service running.
 
 ### 5. Run the API
 
