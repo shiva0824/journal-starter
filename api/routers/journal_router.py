@@ -44,6 +44,7 @@ async def create_entry(entry_data: EntryCreate, entry_service: EntryService = De
     except Exception as e:
         raise HTTPException(status_code=400, detail=f"Error creating entry: {str(e)}")
 
+
 @router.get("/entries")
 async def get_all_entries(entry_service: EntryService = Depends(get_entry_service)):
     """Get all journal entries."""
@@ -53,7 +54,8 @@ async def get_all_entries(entry_service: EntryService = Depends(get_entry_servic
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Error retrieving entries: {str(e)}")
 
-#Define response model as Entry to utilize the "model_config" for datetime formatting.
+
+#Define response model as Entry to utilize "model_config" for datetime formatting.
 @router.get("/entries/{entry_id}", response_model=Entry)
 async def get_entry(request: Request, entry_id: str, entry_service: EntryService = Depends(get_entry_service)):
     async with PostgresDB() as db:
@@ -77,8 +79,7 @@ async def update_entry(request: Request, entry_id: str, entry_update: dict):
   
     return result
 
-# TODO: Implement DELETE /entries/{entry_id} endpoint to remove a specific entry
-# Return 404 if entry not found
+
 @router.delete("/entries/{entry_id}")
 async def delete_entry(request: Request, entry_id: str, entry_service: EntryService = Depends(get_entry_service)):
     
