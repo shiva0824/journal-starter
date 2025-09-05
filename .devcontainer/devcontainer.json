@@ -1,14 +1,13 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the
 // README at: https://github.com/devcontainers/templates/tree/main/src/python
 {
-  "name": "Journal API Dev V2",
+  "name": "Journal API",
   "dockerComposeFile": ["./docker-compose.yml"],
   "features": {
     "ghcr.io/devcontainers/features/azure-cli:1": {}
   },
-  "service": "devcontainerV2",
+  "service": "devcontainer",
   "workspaceFolder": "/workspaces/",
-  "postCreateCommand": "pip3 install --user -r api/requirements.txt",
   "forwardPorts": [8000],
   "remoteUser": "root"
 }
