@@ -4,7 +4,35 @@ Welcome to your Python capstone project! You'll be working with a **FastAPI + Po
 
 By the end of this capstone, your API should be working locally and ready for cloud deployment.
 
-## 🚀 Getting Started
+## Table of Contents
+
+- [🚀 Getting Started](#-getting-started)
+  - [Prerequisites](#prerequisites)
+  - [1. Fork and Clone the Repository](#1-fork-and-clone-the-repository)
+  - [2. Configure Your Environment (.env)](#2-configure-your-environment-env)
+  - [3. Set Up Your Development Environment](#3-set-up-your-development-environment)
+  - [4. Verify the PostgreSQL Database Is Running](#4-verify-the-postgresql-database-is-running)
+  - [5. Run the API](#5-run-the-api)
+  - [6. Test Everything Works! 🎉](#6-test-everything-works-)
+- [�️ Explore Your Database (Optional)](#️-explore-your-database-optional)
+  - [1. Install PostgreSQL Extension](#1-install-postgresql-extension)
+  - [2. Connect to Your Database](#2-connect-to-your-database)
+  - [3. Explore Your Data](#3-explore-your-data)
+- [Project Structure](#project-structure)
+- [Your Learning Goals](#your-learning-goals)
+- [🎯 Development Tasks (Your Work!)](#-development-tasks-your-work)
+  - [1. API Implementation (Required)](#1-api-implementation-required)
+  - [2. Logging Setup (Required)](#2-logging-setup-required)
+  - [3. Data Model Improvements (Optional)](#3-data-model-improvements-optional)
+  - [4. Cloud CLI Setup (Required for Deployment)](#4-cloud-cli-setup-required-for-deployment)
+- [📊 Data Schema](#-data-schema)
+- [🔌 API Endpoints](#-api-endpoints)
+- [✅ How to Complete This Project](#-how-to-complete-this-project)
+- [🔧 Troubleshooting](#-troubleshooting)
+- [🤝 Contributing](#-contributing)
+- [📄 License](#-license)
+
+## �🚀 Getting Started
 
 ### Prerequisites
 
@@ -15,14 +43,19 @@ By the end of this capstone, your API should be working locally and ready for cl
 ### 1. Fork and Clone the Repository
 
 1. **Fork this repository** to your GitHub account by clicking the "Fork" button
-2. **Clone your fork** to your local machine:
+1. **Clone your fork** to your local machine:
 
    ```bash
    git clone https://github.com/YOUR_USERNAME/journal-starter.git
+   ```
+
+1. Move into the project directory:
+
+   ```bash
    cd journal-starter
    ```
 
-3. **Open in VS Code**:
+1. **Open in VS Code**:
 
    ```bash
    code .
@@ -38,25 +71,6 @@ Environment variables live in a `.env` file (which is **git-ignored** so you don
    cp .env-sample .env
    ```
 
-2. Open `.env` and review the contents. It should look like this:
-
-   ```env
-   POSTGRES_USER=postgres
-   POSTGRES_PASSWORD=postgres
-   POSTGRES_DB=career_journal
-   
-   DATABASE_URL=postgresql://postgres:postgres@localhost:5432/career_journal
-   ```
-
-3. The DATABASE_URL value points to the PostgreSQL container you started in the previous step. Your database credentials are also stored via environment variables.
-
-Why a sample file? 
-- Keeps secrets out of Git history
-- Lets teammates (or future you) know which variables are required
-- Makes onboarding predictable
-
-If you break the file, you can always re-copy from `.env-sample`.
-
 ### 3. Set Up Your Development Environment
 
 1. **Install the Dev Containers extension** in VS Code (if not already installed)
@@ -67,75 +81,29 @@ If you break the file, you can always re-copy from `.env-sample`.
 
 ### 4. Verify the PostgreSQL Database Is Running
 
-   ```bash
-   docker-compose ps
-   ```
+In a terminal outside of VS Code, run:
 
-   You should see the postgres service running.
-=======
-### 4. Configure Your Environment (.env)
+```bash
+   docker ps
+```
 
-Environment variables live in a `.env` file (which is **git-ignored** so you don't accidentally commit secrets). This repo ships with a template named `.env-sample`.
-
-1. Copy the sample file to create your real `.env`:
-
-   ```bash
-   cp .env-sample .env
-   ```
-
-2. Open `.env` and review the contents. It should look like this:
-
-   ```env
-   DATABASE_URL=postgresql://postgres:postgres@localhost:5432/career_journal
-   ```
-
-3. This value points to the PostgreSQL container you started in the previous step. If you ever change the database name, user, or password in `docker-compose.yml`, update the URL here to match.
-
-Why a sample file? 
-- Keeps secrets out of Git history
-- Lets teammates (or future you) know which variables are required
-- Makes onboarding predictable
-
-If you break the file, you can always re-copy from `.env-sample`.
-
+You should see the postgres service running.
 
 ### 5. Run the API
 
+Make sure you are in the root of your project in the terminal:
+
 ```bash
-# From the project root (should already be your current directory)
-./start.sh
+   ./start.sh
 ```
 
 ### 6. Test Everything Works! 🎉
 
 1. **Visit the API docs**: http://localhost:8000/docs
-2. **Try the working endpoints**:
-   - POST `/entries` - Create a new journal entry
-   - GET `/entries` - View all your journal entries
-   - PATCH `/entries/{id}` - Update an entry
-   - DELETE `/entries` - Delete all entries
-
-3. **Create your first entry** using the docs interface to make sure everything is connected!
-4. **View your entries** using the GET `/entries` endpoint to see what you've created!
+1. **Create your first entry** In the Docs UI Use the POST `/entries` endpoint to create a new journal entry.
+1. **View your entries** using the GET `/entries` endpoint to see what you've created!
 
 **🎯 Once you can create and see entries, you're ready to start implementing the missing endpoints!**
-
-## 🔧 Troubleshooting
-
-**If the API won't start:**
-- Make sure the PostgreSQL container is running: `docker-compose ps`
-- Check the container logs: `docker-compose logs postgres`
-- Restart the database: `docker-compose restart postgres`
-
-**If you can't connect to the database:**
-- Verify the `.env` file exists and has the correct DATABASE_URL
-- Make sure Docker Desktop is running
-- Try restarting the dev container: `Dev Containers: Rebuild Container`
-
-**If the dev container won't open:**
-- Ensure Docker Desktop is running
-- Install the "Dev Containers" extension in VS Code
-- Try: `Dev Containers: Rebuild and Reopen in Container`
 
 ## 🗄️ Explore Your Database (Optional)
 
@@ -147,6 +115,7 @@ Want to see your data directly in the database? You can connect to PostgreSQL us
 2. **Restart VS Code** after installation
 
 ### 2. Connect to Your Database
+
 1. **Open the PostgreSQL extension** (click the PostgreSQL icon in the sidebar)
 2. **Click "Add Connection"** or the "+" button
 3. **Enter these connection details**:
@@ -159,14 +128,17 @@ Want to see your data directly in the database? You can connect to PostgreSQL us
    - **Display name**: `Journal Starter DB` (or any name you prefer)
 
 ### 3. Explore Your Data
+
 1. **Expand your connection** in the PostgreSQL panel
 2. **Left-click on "Journal Starter DB" to expand**
 3. **Right-click on "career_journal"**
 4. **Select "New Query"**
 5. **Type this query** to see all your entries:
+
    ```sql
    SELECT * FROM entries;
    ```
+
 6. **Run the query** to see all your journal data! (Ctrl/Cmd + Enter OR use the PostgreSQL command pallete: Run Query)
 
 You can now explore the database structure, see exactly how your data is stored, and run custom queries to understand PostgreSQL better.
@@ -175,7 +147,7 @@ You can now explore the database structure, see exactly how your data is stored,
 
 This project uses a clean FastAPI architecture with PostgreSQL:
 
-```
+```txt
 api/
 ├── main.py                    # FastAPI app entry point
 ├── requirements.txt           # Python dependencies  
@@ -193,8 +165,9 @@ api/
 ## Your Learning Goals
 
 Complete a Journal API that allows users to:
+
 - ✅ **Store journal entries** (already implemented)
-- ✅ **Retrieve all journal entries** (already implemented) 
+- ✅ **Retrieve all journal entries** (already implemented)
 - ❌ **Retrieve single journal entry** (you need to implement)  
 - ❌ **Delete specific journal entries** (you need to implement)
 - ✅ **Update journal entries** (already implemented)
@@ -204,15 +177,18 @@ Complete a Journal API that allows users to:
 ## 🎯 Development Tasks (Your Work!)
 
 ### 1. API Implementation (Required)
+
 **File: `api/routers/journal_router.py`**
 
 Implement these missing endpoints:
+
 - [ ] **GET /entries/{entry_id}** - Get single entry by ID  
 - [ ] **DELETE /entries/{entry_id}** - Delete specific entry
 
 Each endpoint has detailed TODO comments with step-by-step guidance!
 
 ### 2. Logging Setup (Required)
+
 **File: `api/main.py`**
 
 - [ ] Configure basic logging using `logging.basicConfig()`
@@ -221,6 +197,7 @@ Each endpoint has detailed TODO comments with step-by-step guidance!
 - [ ] Test with a startup log message
 
 ### 3. Data Model Improvements (Optional)
+
 **File: `api/models/entry.py`**
 
 - [ ] Add custom field validators (e.g., minimum length)
@@ -228,6 +205,7 @@ Each endpoint has detailed TODO comments with step-by-step guidance!
 - [ ] Add schema version tracking
 
 ### 4. Cloud CLI Setup (Required for Deployment)
+
 **File: `.devcontainer/devcontainer.json`**
 
 - [ ] Choose and uncomment ONE cloud CLI tool:
@@ -268,23 +246,56 @@ Each journal entry follows this structure:
 5. **Add logging** - see your API in action
 6. **Choose a cloud CLI** - prepare for deployment
 
-## 🎓 Skills You'll Practice
+## 🔧 Troubleshooting
 
-### FastAPI & Python
-- **RESTful API design** - HTTP methods, status codes, JSON responses
-- **Async programming** - using `async`/`await` with databases
-- **Dependency injection** - using FastAPI's `Depends()` 
-- **Error handling** - proper HTTP exceptions and status codes
-- **Data validation** - Pydantic models and field validation
-- **Project structure** - organizing code with routers, services, repositories
+**If the API won't start:**
 
-### Database Integration  
-- **PostgreSQL** - connecting and querying with asyncpg
-- **Repository pattern** - abstracting database operations
-- **JSON storage** - storing structured data in JSONB fields
+- Make sure the PostgreSQL container is running: `docker ps`
+- Check the container logs: `docker logs your-postgres-container-name`
+- Restart the database: `docker restart your-postgres-container-name`
 
-### Development Practices
-- **Environment configuration** - using .env files
-- **Logging** - tracking application behavior
-- **API documentation** - FastAPI's automatic OpenAPI docs
-- **Error handling** - graceful failure and user feedback
+**If you can't connect to the database:**
+
+- Verify the `.env` file exists and has the correct DATABASE_URL
+- Make sure Docker Desktop is running
+- Try restarting the dev container: `Dev Containers: Rebuild Container`
+
+**If the dev container won't open:**
+
+- Ensure Docker Desktop is running
+- Install the "Dev Containers" extension in VS Code
+- Try: `Dev Containers: Rebuild and Reopen in Container`
+
+## 🤝 Contributing
+
+We welcome contributions to improve this capstone project! Open an issue and we can plan from there.
+
+### Reporting Issues
+
+Found a bug or have a suggestion? Please [open an issue](https://github.com/learntocloud/journal-starter/issues) with:
+
+- **Clear description** of the problem or suggestion
+- **Steps to reproduce** (for bugs)
+- **Expected vs actual behavior**
+- **Environment details** (OS, Docker version, etc.)
+
+## 📄 License
+
+This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) file for details.
+
+### What This Means
+
+- ✅ **Commercial use** - You can use this code in commercial projects
+- ✅ **Modification** - You can modify and distribute the code
+- ✅ **Distribution** - You can distribute the original or modified code
+- ✅ **Private use** - You can use this code for personal projects
+- ❌ **Liability** - The authors are not liable for any damages
+- ❌ **Warranty** - This code comes with no warranty
+
+### Attribution
+
+If you use this project as a foundation for your own work, we'd appreciate a link back to this repository, but it's not required.
+
+---
+
+**Happy coding! 🚀** Built with ❤️ for learning cloud development.
