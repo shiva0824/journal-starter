@@ -162,6 +162,37 @@ api/
     └── entry_service.py      # Business logic layer
 ```
 
+## 🌳 Git Workflow & Best Practices
+
+You'll use **feature branches** and **Pull Requests (PRs)** for each task.
+
+### Your Git Workflow
+
+Create a **feature branch** for each task:
+
+```bash
+# 1. Start from main
+git checkout main
+git pull origin main
+
+# 2. Create feature branch
+git checkout -b feature/get-single-entry
+
+# 3. Work and commit
+git add .
+git commit -m "feat: implement GET /entries/{id} endpoint"
+
+# 4. Push and create PR
+git push origin feature/get-single-entry
+```
+
+### Branch Naming Convention
+
+- `feature/get-single-entry` - GET single entry endpoint
+- `feature/delete-entry` - DELETE entry endpoint  
+- `feature/logging-setup` - Logging implementation
+- `feature/cloud-cli-setup` - Cloud CLI configuration
+
 ## Your Learning Goals
 
 Complete a Journal API that allows users to:
@@ -176,18 +207,77 @@ Complete a Journal API that allows users to:
 
 ## 🎯 Development Tasks (Your Work!)
 
+Complete each task using the **feature branch workflow**. This mirrors real-world development practices!
+
 ### 1. API Implementation (Required)
 
-**File: `api/routers/journal_router.py`**
+#### Task 1a: GET Single Entry Endpoint
 
-Implement these missing endpoints:
+**Branch: `feature/get-single-entry`**
 
-- [ ] **GET /entries/{entry_id}** - Get single entry by ID  
-- [ ] **DELETE /entries/{entry_id}** - Delete specific entry
+1. **Create your feature branch**:
+   ```bash
+   git checkout main
+   git pull origin main
+   git checkout -b feature/get-single-entry
+   ```
 
-Each endpoint has detailed TODO comments with step-by-step guidance!
+2. **Implement the endpoint** in `api/routers/journal_router.py`:
+   - [ ] **GET /entries/{entry_id}** - Get single entry by ID
+
+3. **Test your implementation**:
+   - Use the `/docs` page to test your endpoint
+   - Try valid and invalid entry IDs
+
+4. **Commit and push**:
+   ```bash
+   git add .
+   git commit -m "feat: implement GET /entries/{id} endpoint
+
+   - Add route handler for single entry retrieval
+   - Include proper error handling for non-existent entries
+   - Add response model validation"
+   
+   git push origin feature/get-single-entry
+   ```
+
+5. **Create a Pull Request**:
+   - Go to your GitHub repository
+   - Click "Compare & pull request" 
+   - Use this PR template:
+
+   ```markdown
+   ## 📝 Description
+   Implements GET /entries/{entry_id} endpoint for retrieving single journal entries.
+
+   ## ✅ Testing Done
+   - [x] Tested with valid entry ID via /docs
+   - [x] Tested with invalid entry ID (returns 404)
+   - [x] Verified response matches Entry model schema
+
+   ## 📸 Screenshots
+   (Add screenshot of successful test from /docs page)
+   ```
+
+#### Task 1b: DELETE Single Entry Endpoint
+
+**Branch: `feature/delete-entry`**
+
+1. **Create your feature branch**:
+   ```bash
+   git checkout main
+   git pull origin main  # Get any merged changes
+   git checkout -b feature/delete-entry
+   ```
+
+2. **Implement the endpoint**:
+   - [ ] **DELETE /entries/{entry_id}** - Delete specific entry
+
+3. **Follow the same commit, push, and PR process** as above
 
 ### 2. Logging Setup (Required)
+
+**Branch: `feature/logging-setup`**
 
 **File: `api/main.py`**
 
@@ -198,6 +288,8 @@ Each endpoint has detailed TODO comments with step-by-step guidance!
 
 ### 3. Data Model Improvements (Optional)
 
+**Branch: `feature/data-model-improvements`**
+
 **File: `api/models/entry.py`**
 
 - [ ] Add custom field validators (e.g., minimum length)
@@ -206,12 +298,81 @@ Each endpoint has detailed TODO comments with step-by-step guidance!
 
 ### 4. Cloud CLI Setup (Required for Deployment)
 
+**Branch: `feature/cloud-cli-setup`**
+
 **File: `.devcontainer/devcontainer.json`**
 
 - [ ] Choose and uncomment ONE cloud CLI tool:
   - Azure CLI: `"ghcr.io/devcontainers/features/azure-cli:1": {}`
   - AWS CLI: `"ghcr.io/devcontainers/features/aws-cli:1": {}`  
   - Google Cloud CLI: `"ghcr.io/devcontainers/features/gcloud:1": {}`
+
+## 🔄 Pull Request Guidelines
+
+### Creating Quality PRs
+
+**PR Title Format:**
+```
+feat: implement GET /entries/{id} endpoint
+fix: resolve database connection timeout
+docs: update API documentation
+```
+
+**PR Description Template:**
+```markdown
+## 📝 Description
+Brief description of what this PR accomplishes.
+
+## 🎯 Type of Change
+- [ ] New feature (non-breaking change)
+- [ ] Bug fix (non-breaking change)
+- [ ] Documentation update
+- [ ] Code refactoring
+
+## ✅ Testing Done
+- [ ] Tested manually via /docs interface
+- [ ] Verified no existing functionality broken
+- [ ] Added appropriate error handling
+
+## 📸 Screenshots/Demo
+(If applicable, add screenshots or GIFs showing the feature working)
+
+## 🔍 Review Checklist
+- [ ] Code follows project style guidelines
+- [ ] Self-review completed
+- [ ] Comments added for complex logic
+- [ ] No sensitive data exposed
+```
+
+### Getting Your PR Reviewed
+
+**Do a Self-Review**
+Before merging your PR, do a thorough **self-review**:
+
+1. **Check the diff** - Does every change make sense?
+2. **Test thoroughly** - Does the feature work as expected?
+3. **Read your code** - Is it clear and well-commented?
+4. **Run the app** - Does everything still work?
+5. **Consider edge cases** - What could go wrong?
+
+**Optional: Share in Discord**
+Feel free to share your PR in the **Learn to Cloud Discord #phase-2** channel if you'd like additional feedback from the community!
+
+### Merging Your PR
+
+Once you've completed your self-review:
+
+1. **Address any issues** - Fix anything you found during review
+2. **Test one more time** - Make sure everything works
+3. **Merge when ready** - Use "Squash and merge" for clean history
+4. **Delete the branch** - Keep your repository clean
+
+```bash
+# After merging, clean up locally
+git checkout main
+git pull origin main
+git branch -d feature/your-branch-name
+```
 
 ## 📊 Data Schema
 
@@ -239,12 +400,65 @@ Each journal entry follows this structure:
 
 ## ✅ How to Complete This Project
 
-1. **Start by running the existing API** - make sure it works
-2. **Study the working endpoints** - understand the patterns
-3. **Implement missing endpoints one by one** - follow the TODO comments
-4. **Test each endpoint** - use the /docs page to test
-5. **Add logging** - see your API in action
-6. **Choose a cloud CLI** - prepare for deployment
+### The Professional Development Flow
+
+1. **Set up your repository** - Fork, clone, and configure environment
+2. **Create feature branches** - One branch per task/endpoint
+3. **Implement incrementally** - Small, focused changes
+4. **Test thoroughly** - Use /docs to verify each endpoint
+5. **Create quality PRs** - Clear descriptions and testing evidence
+6. **Get code reviewed** - Self-review with optional Discord sharing
+7. **Merge and clean up** - Maintain high code quality
+
+### Git Commands You'll Use
+
+```bash
+# Starting new work
+git checkout main
+git pull origin main
+git checkout -b feature/your-feature-name
+
+# Working on your feature
+git add .
+git commit -m "descriptive commit message"
+git push origin feature/your-feature-name
+
+# After PR is merged
+git checkout main
+git pull origin main
+git branch -d feature/your-feature-name
+```
+
+### Success Criteria
+
+By the end of this project, you should have:
+
+- ✅ **4+ merged Pull Requests** - One for each major feature
+- ✅ **Clean commit history** - Descriptive commit messages
+- ✅ **Working API** - All endpoints functional and tested
+- ✅ **Professional workflow** - Feature branches and code review
+- ✅ **Deployment ready** - Cloud CLI configured
+
+## 🎓 What You're Learning
+
+This project teaches you:
+
+### Technical Skills
+- **FastAPI development** - Building REST APIs
+- **PostgreSQL integration** - Database operations
+- **Docker containers** - Development environment
+- **API testing** - Using interactive documentation
+
+### Professional Skills
+- **Git workflows** - Feature branches and PRs
+- **Code review** - Self-review with optional community feedback
+- **Project organization** - Clean, maintainable code structure
+- **Documentation** - Clear commit messages and PR descriptions
+
+### Cloud Readiness
+- **Containerization** - App ready for cloud deployment
+- **Environment configuration** - Proper secret management
+- **CLI tools** - Ready for cloud provider interaction
 
 ## 🔧 Troubleshooting
 
