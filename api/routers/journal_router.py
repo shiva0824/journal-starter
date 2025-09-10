@@ -73,9 +73,12 @@ async def get_entry(request: Request, entry_id: str, entry_service: EntryService
 
     Hint: Check the update_entry endpoint for similar patterns
     """
-    raise HTTPException(
-        status_code=501, detail="Not implemented - complete this endpoint!")
-
+    async with PostgresDB() as db:
+        result = await entry_service.get_entry(entry_id)
+    if not result:
+        raise HTTPException(
+            status_code=404, detail="Entry not found")
+    return result
 
 @router.patch("/entries/{entry_id}")
 async def update_entry(request: Request, entry_id: str, entry_update: dict):
