@@ -28,7 +28,7 @@ async def create_entry(entry_data: EntryCreate, entry_service: EntryService = De
         entry = Entry(
             work=entry_data.work,
             struggle=entry_data.struggle,
-            intention=entry_data.intention,
+            intention=entry_data.intention
         )
 
         # Convert to dict but keep datetime objects for database
@@ -73,9 +73,12 @@ async def get_entry(request: Request, entry_id: str, entry_service: EntryService
 
     Hint: Check the update_entry endpoint for similar patterns
     """
-    raise HTTPException(
-        status_code=501, detail="Not implemented - complete this endpoint!")
-
+    async with PostgresDB() as db:
+        result = await entry_service.get_entry(entry_id)
+    if not result:
+        raise HTTPException(
+            status_code=404, detail="Entry not found")
+    return result
 
 @router.patch("/entries/{entry_id}")
 async def update_entry(request: Request, entry_id: str, entry_update: dict):
@@ -83,7 +86,6 @@ async def update_entry(request: Request, entry_id: str, entry_update: dict):
         entry_service = EntryService(db)
         result = await entry_service.update_entry(entry_id, entry_update)
     if not result:
-
         raise HTTPException(status_code=404, detail="Entry not found")
 
     return result
@@ -105,8 +107,11 @@ async def delete_entry(request: Request, entry_id: str, entry_service: EntryServ
 
     Hint: Look at how the update_entry endpoint checks for existence
     """
-    raise HTTPException(
-        status_code=501, detail="Not implemented - complete this endpoint!")
+    existing_entry = await entry_service.get_entry(entry_id)
+    if not existing_entry:
+        raise HTTPException(status_code=404, detail="Entry not found")
+    await entry_service.delete_entry(entry_id)
+    return {"detail": "Entry deleted"}
 
 
 @router.delete("/entries")
